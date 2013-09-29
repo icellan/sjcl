@@ -77,8 +77,10 @@ TEST_SCRIPTS= $(TEST_COMMON) \
 
 # Run all tests in node.js.
 
-test: sjcl.js $(TEST_SCRIPTS) test/run_tests_node.js
-	node test/run_tests_node.js $< $(TEST_SCRIPTS)
+test: sjcl.js $(TEST_SCRIPTS) test/run_tests_rhino.js
+	@rhino -O -1 -w test/run_tests_rhino.js $< $(TEST_SCRIPTS)
+	@rhino -O 9 -w test/run_tests_rhino.js $< $(TEST_SCRIPTS_OPT)
+	phantomjs test/ccm_arraybuffer_test.js
 
 tidy:
 	find . -name '*~' -delete
